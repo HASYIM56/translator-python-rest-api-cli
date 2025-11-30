@@ -36,11 +36,11 @@ praktis.
 -   **Antarmuka ASCII yang rapi** menggunakan tabel untuk menu dan hasil
     terjemahan.
 -   **Dukungan banyak bahasa**, yaitu:
-    -   `id` --- Indonesia\
-    -   `en` --- English\
-    -   `ja` --- Japanese\
-    -   `ko` --- Korean\
-    -   `ar` --- Arabic\
+    -   `id` --- Indonesia
+    -   `en` --- English
+    -   `ja` --- Japanese
+    -   `ko` --- Korean
+    -   `ar` --- Arabic
 -   **Input ID negara (opsional)**, ditampilkan dalam hasil terjemahan.
 -   **Penanganan error** saat API gagal diakses atau terjadi timeout.
 -   **Pembersihan layar otomatis** agar tampilan tetap bersih dan
