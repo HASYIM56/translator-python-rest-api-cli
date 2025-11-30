@@ -1,6 +1,6 @@
 <div align="center">
 
-  <img src="profile.png" width="150" alt="Foto Profil HASYIM56"/>
+  <img src="/image/H56.png" width="150" alt="Foto Profil HASYIM56"/>
   
   <h1>HASYIM56</h1>
   
