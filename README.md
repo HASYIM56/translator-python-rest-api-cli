@@ -1,4 +1,4 @@
-# Multi-Language Translation CLI Program
+# Multi-Language Translation CLI Program (MLTCP)
 
 Program ini adalah aplikasi **Command Line Interface (CLI)** berbasis
 Python yang berfungsi untuk menerjemahkan teks ke berbagai bahasa
