@@ -174,7 +174,7 @@ Program ini menggunakan API penerjemah publik:
 
         Content-Type: application/json
 
--   **Timeout:** 5 detik\
+-   **Timeout:** 5 detik
 
 -   **Respons sukses:**
 
