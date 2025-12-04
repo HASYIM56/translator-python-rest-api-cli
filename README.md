@@ -159,7 +159,7 @@ Program ini menggunakan API penerjemah publik:
 
 -   **Endpoint**
 
-        POST https://h56-translator-api.netlify.app/api/translate
+        POST https://h56-translator-api.vercel.app/api/translate
 
 -   **Payload**
 
