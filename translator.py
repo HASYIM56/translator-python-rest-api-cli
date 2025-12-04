@@ -34,7 +34,7 @@ def show_languages():
     print(line(W))
 
 def translate(text, target):
-    url = "https://h56-translator-api.netlify.app/api/translate"
+    url = "https://h56-translator-api.vercel.app/api/translate"
     payload = {"text": text, "targetLang": target}
     headers = {"Content-Type": "application/json"}
 
