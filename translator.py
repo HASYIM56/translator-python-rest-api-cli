@@ -2,13 +2,23 @@ import requests
 import json
 import os
 import datetime
+import shutil
 
 # ====================================================
-# CONFIG & GLOBAL VARIABLE
+# CONFIG & GLOBAL VARIABLES
 # ====================================================
 
 LOG_FILE = "h56_history.log"
-W = 60  # Lebar tabel
+
+def get_terminal_width(default=60):
+    """Menentukan lebar tabel dinamis sesuai terminal"""
+    try:
+        width = shutil.get_terminal_size().columns
+        return min(max(width, 40), 100)  # Batas aman
+    except:
+        return default
+
+W = get_terminal_width()
 
 # Daftar bahasa yang didukung
 LANGUAGES = {
@@ -32,23 +42,25 @@ TRANSLATE_MODES = {
     "informal_slang_v2": "Informal Slang V2"
 }
 
+
 # ====================================================
 # UTILITIES
 # ====================================================
 
-def line(width):
-    return "+" + "-" * width + "+"
+def line(width=W):
+    return "+" + "-" * (width - 2) + "+"
 
-def row(text, width):
-    if len(text) > width - 2:
-        text = text[:width-5] + "..."
-    return "| " + text.ljust(width - 2) + "|"
+def row(text, width=W):
+    text = str(text)
+    if len(text) > width - 4:
+        text = text[:width - 7] + "..."
+    return "| " + text.ljust(width - 4) + " |"
 
 def clear():
-    try:
-        os.system("cls" if os.name == "nt" else "clear")
-    except:
-        pass
+    os.system("cls" if os.name == "nt" else "clear")
+
+def pause(msg="\nTekan Enter untuk kembali ke menu..."):
+    input(msg)
 
 def log_history(original, translated, lang, country_id, mode):
     """Menyimpan riwayat ke file log"""
@@ -61,9 +73,9 @@ def log_history(original, translated, lang, country_id, mode):
 
 def show_history():
     clear()
-    print(line(W))
-    print(row("RIWAYAT TERJEMAHAN", W))
-    print(line(W))
+    print(line())
+    print(row("RIWAYAT TERJEMAHAN"))
+    print(line())
 
     if not os.path.exists(LOG_FILE):
         print("Belum ada riwayat tersimpan.\n")
@@ -76,7 +88,8 @@ def show_history():
                 for log in logs:
                     print(log.strip())
 
-    input("\nTekan Enter untuk kembali ke menu...")
+    pause()
+
 
 # ====================================================
 # API FUNCTION
@@ -110,25 +123,27 @@ def translate_v2(text, target, mode):
     except:
         return "(Error koneksi ke server)"
 
+
 # ====================================================
 # MAIN FEATURES
 # ====================================================
 
 def show_languages():
-    print("\n" + line(W))
-    print(row("TABEL PILIHAN BAHASA", W))
-    print(line(W))
+    print("\n" + line())
+    print(row("TABEL PILIHAN BAHASA"))
+    print(line())
     for code, name in LANGUAGES.items():
-        print(row(f"{code} = {name}", W))
-        print(line(W))
+        print(row(f"{code} = {name}"))
+    print(line())
 
 def show_modes():
-    print("\n" + line(W))
-    print(row("MODE TRANSLATE V2", W))
-    print(line(W))
+    print("\n" + line())
+    print(row("MODE TRANSLATE V2"))
+    print(line())
     for code, name in TRANSLATE_MODES.items():
-        print(row(f"{code} = {name}", W))
-        print(line(W))
+        print(row(f"{code} = {name}"))
+    print(line())
+
 
 # ====================================================
 # PROGRAM INTERFACE
@@ -136,25 +151,22 @@ def show_modes():
 
 def start_translation():
     clear()
-    print(line(W))
-    print(row("TABEL INPUT TERJEMAHAN", W))
-    print(line(W))
+    print(line())
+    print(row("TABEL INPUT TERJEMAHAN"))
+    print(line())
 
-    # Input teks
     input_text = input("Masukkan teks yang mau diterjemahkan : ").strip()
     if not input_text:
-        print("\nTeks tidak boleh kosong. Tekan Enter untuk kembali...")
-        input()
+        print("\nTeks tidak boleh kosong.")
+        pause()
         return
 
     # Pilih bahasa target
     while True:
         show_languages()
-        target_lang = input("Masukkan bahasa target : ").strip().lower()
-
+        target_lang = input("Masukkan bahasa target (atau ketik 'back' untuk kembali): ").strip().lower()
         if target_lang == "back":
             return
-
         if target_lang in LANGUAGES:
             break
         else:
@@ -175,15 +187,15 @@ def start_translation():
         while True:
             show_modes()
             selected_mode = input("Masukkan mode V2: ").strip().lower()
-
             if selected_mode in TRANSLATE_MODES:
                 break
             else:
                 print("Kode mode salah!")
 
-    country_id = input("Masukkan ID negara (opsional): ")
+    country_id = input("Masukkan ID negara (opsional): ").strip()
 
     # Proses API
+    print("\nMemproses terjemahan, harap tunggu...\n")
     if mode_used == "v1":
         translated_text = translate_v1(input_text, target_lang)
     else:
@@ -194,37 +206,38 @@ def start_translation():
 
     # Output
     clear()
-    print(line(W))
-    print(row("HASIL TERJEMAHAN", W))
-    print(line(W))
-    print(row(f"Teks Asli      : {input_text}", W))
-    print(row(f"Bahasa Target  : {target_lang} ({LANGUAGES[target_lang]})", W))
-    print(row(f"Mode           : {mode_used.upper()}", W))
+    print(line())
+    print(row("HASIL TERJEMAHAN"))
+    print(line())
+    print(row(f"Teks Asli      : {input_text}"))
+    print(row(f"Bahasa Target  : {target_lang} ({LANGUAGES[target_lang]})"))
+    print(row(f"Mode           : {mode_used.upper()}"))
     if mode_used == "v2":
-        print(row(f"V2 Mode        : {selected_mode}", W))
-    print(row(f"ID Negara      : {country_id}", W))
-    print(line(W))
-    print(row("OUTPUT:", W))
-    print(line(W))
-    print(row(translated_text, W))
-    print(line(W))
+        print(row(f"V2 Mode        : {selected_mode}"))
+    print(row(f"ID Negara      : {country_id if country_id else '-'}"))
+    print(line())
+    print(row("OUTPUT:"))
+    print(line())
+    print(row(translated_text))
+    print(line())
 
-    input("\nTekan Enter untuk kembali ke menu...")
+    pause()
+
 
 # ====================================================
-# MENU UTAMA
+# MAIN MENU
 # ====================================================
 
 def main_menu():
     while True:
         clear()
-        print(line(W))
-        print(row("PROGRAM TERJEMAHAN MULTI-BAHASA", W))
-        print(line(W))
-        print(row("1. Mulai Terjemahkan", W))
-        print(row("2. Lihat Riwayat Terjemahan", W))
-        print(row("3. Keluar Program", W))
-        print(line(W))
+        print(line())
+        print(row("PROGRAM TERJEMAHAN MULTI-BAHASA"))
+        print(line())
+        print(row("1. Mulai Terjemahkan"))
+        print(row("2. Lihat Riwayat Terjemahan"))
+        print(row("3. Keluar Program"))
+        print(line())
 
         choice = input("\nPilih menu (1/2/3): ").strip()
 
@@ -236,11 +249,12 @@ def main_menu():
             print("\nKeluar program...")
             break
         else:
-            print("\nInput tidak valid! Tekan Enter untuk kembali...")
-            input()
+            print("\nInput tidak valid!")
+            pause()
+
 
 # ====================================================
-# JALANKAN PROGRAM
+# RUN PROGRAM
 # ====================================================
 
 if __name__ == "__main__":
