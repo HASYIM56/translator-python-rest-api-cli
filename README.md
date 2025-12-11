@@ -1,3 +1,16 @@
+<table>
+  <tr>
+    <td><img src="https://img.shields.io/badge/MLTCP-Multi--Language%20Translation%20CLI%20Program-0A84FF?logo=python&logoColor=white" /></td>
+    <td><img src="https://img.shields.io/badge/version-1.0.4-blue" /></td>
+    <td><img src="https://img.shields.io/badge/python-3.10%2B-3776AB?logo=python&logoColor=white" /></td>
+  </tr>
+  <tr>
+    <td><img src="https://img.shields.io/badge/platform-CLI-lightgrey" /></td>
+    <td><img src="https://img.shields.io/badge/license-MIT-green" /></td>
+    <td><img src="https://img.shields.io/badge/status-stable-brightgreen" /></td>
+  </tr>
+</table>
+
 # Multi-Language Translation CLI Program (MLTCP)
 
 Program ini adalah aplikasi **Command Line Interface (CLI)** berbasis Python yang berfungsi untuk menerjemahkan teks ke berbagai bahasa menggunakan **H56 Translator API**. Aplikasi ini didesain dengan tampilan tabel ASCII yang rapi sehingga pengalaman penggunaan terasa lebih terstruktur dan mudah dibaca.
@@ -250,6 +263,4 @@ Format:
 | Timeout API | Server sibuk / internet lambat | Coba ulangi beberapa saat |
 | Input kosong | Pengguna menekan Enter tanpa teks | Masukkan teks minimal 1 karakter |
 | Bahasa tidak valid | Kode tidak ada di daftar | Cek kembali daftar bahasa |
-| Mode V2 salah | Salah mengetik kode | Gunakan menu daftar mode |
-
----
+| Mode V2 salah | Salah mengetik kode | Gunakan menu daftar mo
