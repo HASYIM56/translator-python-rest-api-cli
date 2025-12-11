@@ -2,247 +2,254 @@
 
 Program ini adalah aplikasi **Command Line Interface (CLI)** berbasis Python yang berfungsi untuk menerjemahkan teks ke berbagai bahasa menggunakan **H56 Translator API**. Aplikasi ini didesain dengan tampilan tabel ASCII yang rapi sehingga pengalaman penggunaan terasa lebih terstruktur dan mudah dibaca.
 
-------------------------------------------------------------------------
+---
 
 ## Daftar Isi
+1. Pendahuluan
+2. Fitur Utama
+3. Fitur Baru
+4. Mode Translate V2 (Slang/Informal)
+5. Struktur Program
+6. Instalasi
+7. Menjalankan Program
+8. Cara Menggunakan
+9. Dokumentasi API
+10. Riwayat Terjemahan
+11. Troubleshooting
 
-1.  [Pendahuluan](#pendahuluan)
-2.  [Fitur Utama](#fitur-utama)
-3.  [Fitur Baru](#fitur-baru)
-4.  [Struktur Program](#struktur-program)
-5.  [Instalasi](#instalasi)
-6.  [Menjalankan Program](#menjalankan-program)
-7.  [Cara Menggunakan](#cara-menggunakan)
-8.  [Dokumentasi API](#dokumentasi-api)
-9.  [Riwayat Terjemahan](#riwayat-terjemahan)
-10. [Troubleshooting](#troubleshooting)
-
-------------------------------------------------------------------------
+---
 
 ## Pendahuluan
-
 Program ini dibuat untuk memudahkan pengguna dalam menerjemahkan teks dari bahasa apa pun ke beberapa bahasa yang didukung melalui antarmuka terminal. Dengan memanfaatkan API pihak ketiga, aplikasi ini memungkinkan pengguna mendapat hasil terjemahan secara cepat dan praktis.
 
-------------------------------------------------------------------------
+---
 
 ## Fitur Utama
+- **Antarmuka ASCII yang rapi** menggunakan tabel untuk menu dan hasil terjemahan.
+- **Dukungan banyak bahasa**, yaitu:
+  - `id`  Indonesia
+  - `en`  English
+  - `ja`  Japanese
+  - `ko`  Korean
+  - `ar`  Arabic
+  - `fr`  French
+  - `de`  German
+  - `es`  Spanish
+  - `ru`  Russian
+  - `zh`  Chinese (Mandarin)
+- **Input ID negara (opsional)**, ditampilkan dalam hasil terjemahan.
+- **Penanganan error** saat API gagal diakses atau terjadi timeout.
+- **Pembersihan layar otomatis** agar tampilan tetap bersih.
 
--   **Antarmuka ASCII yang rapi** menggunakan tabel untuk menu dan hasil terjemahan.
--   **Dukungan banyak bahasa**, yaitu:
-    -   `id` --- Indonesia
-    -   `en` --- English
-    -   `ja` --- Japanese
-    -   `ko` --- Korean
-    -   `ar` --- Arabic
-    -   `fr` --- French
-    -   `de` --- German
-    -   `es` --- Spanish
-    -   `ru` --- Russian
-    -   `zh` --- Chinese (Mandarin)
--   **Input ID negara (opsional)**, ditampilkan dalam hasil terjemahan.
--   **Penanganan error** saat API gagal diakses atau terjadi timeout.
--   **Pembersihan layar otomatis** agar tampilan tetap bersih dan profesional.
-
-------------------------------------------------------------------------
+---
 
 ## Fitur Baru
 
-Program telah ditingkatkan dengan beberapa fitur tambahan:
+### Fitur Tambahan Berdasarkan Kode Python Terbaru
+Program kini mendukung **Mode Translasi V2**, yaitu fitur terjemahan dengan gaya bahasa slang / informal. Semua teks di bawah ini ditambahkan tanpa menghapus teks lama.
 
-### 1. Menu Log Riwayat
-- Semua hasil terjemahan otomatis disimpan ke file:
-```
-h56_history.log
-```
-- Informasi yang disimpan:
-  - Teks asli
-  - Hasil terjemahan
-  - Bahasa target
-  - ID negara (opsional)
-  - Timestamp
+**Fitur-fitur baru berdasarkan kode Python:**
+- **Mode Translate V2** dengan pilihan gaya:
+  - `slang`
+  - `informal`
+  - `slang_v2`
+  - `informal_slang_v2`
+- Mendukung fungsi API baru:
+  - `translate_v1()`  Mode normal
+  - `translate_v2()`  Mode slang/informal
+- Penambahan menu baru: **Show Modes** untuk menampilkan daftar mode V2.
+- Penyimpanan riwayat kini mencatat:
+  - Mode translasi (V1 / V2)
+  - Mode detail jika menggunakan V2
+- Perbaikan tampilan tabel untuk output V2.
+- Struktur input lebih lengkap: teks, bahasa target, mode translasi, dan ID negara.
+- API endpoint tambahan:
+  - `https://h56-translator-api.vercel.app/api/translate/v2`
 
-### 2. Tampilan Riwayat Terjemahan
-- Pengguna dapat memilih menu **"Lihat Riwayat Terjemahan"** untuk melihat semua aktivitas sebelumnya.
-- Log ditampilkan dalam terminal secara rapi.
+---
 
-### 3. Validasi Input Lebih Baik
-- Jika bahasa tidak sesuai daftar, program memberi peringatan.
-- Jika input teks kosong, pengguna diminta isi ulang.
+## Fitur Baru (Asli Dari File) (Diperbarui)
+### 1. Mode Translate V2 (Slang/Informal)
+Program kini mendukung **Mode Translasi V2** dengan variasi gaya bahasa:
+- `slang` Casual Slang
+- `informal` Informal
+- `slang_v2` Slang V2
+- `informal_slang_v2` Informal Slang V2
 
-### 4. Dukungan Perintah `back`
-- Saat memilih bahasa target, ketik `back` untuk kembali ke menu sebelumnya.
+Fitur ini sangat berguna untuk menghasilkan terjemahan dengan nuansa lebih santai, gaul, atau tidak formal.
 
-### 5. Lebar Tabel Dinamis
-Variabel:
-```
-W = 60
-```
-digunakan untuk mengatur lebar tampilan tabel ASCII.
+### 2. Sistem Log Riwayat yang Lebih Lengkap
+File log `h56_history.log` kini menyimpan:
+- Teks asli
+- Teks hasil terjemahan
+- Bahasa target
+- Mode translasi (V1 / V2 + jenis mode)
+- ID negara (opsional)
+- Timestamp
 
-------------------------------------------------------------------------
+### 3. Menu Riwayat Terjemahan
+Pengguna dapat melihat daftar lengkap riwayat sebelumnya melalui menu khusus.
+
+### 4. Dua Metode API
+Program mengakses dua endpoint:
+- **V1 (Normal)**: Terjemahan standar
+- **V2 (Slang/Informal)**: Terjemahan dengan style khusus
+
+### 5. Validasi Input Lengkap
+- Cek teks kosong
+- Cek kode bahasa valid
+- Cek mode translasi valid untuk V2
+- Fitur `back` untuk kembali ke menu sebelumnya
+
+---
+
+## Mode Translate V2 (Detail)
+Fitur V2 menyediakan kemampuan menerjemahkan menggunakan gaya bahasa yang lebih fleksibel.
+
+Daftar mode lengkap:
+| Kode | Deskripsi |
+|------|-----------|
+| `slang` | Terjemahan slang santai |
+| `informal` | Terjemahan informal umum |
+| `slang_v2` | Slang tingkat lanjutan |
+| `informal_slang_v2` | Campuran informal + slang |
+
+Format request V2 menggunakan field tambahan `translationMode`.
+
+---
 
 ## Struktur Program
-
 Berikut fungsi-fungsi utama dalam kode:
-
 | Fungsi | Deskripsi |
-|---|---|
-| `main_menu()` | Menampilkan menu utama dan memproses pilihan pengguna. |
-| `start_translation()` | Mengatur alur input pengguna dan menampilkan hasil terjemahan. |
-| `translate(text, target)` | Mengirim permintaan POST ke API untuk menerjemahkan teks. |
-| `show_languages()` | Menampilkan daftar bahasa yang tersedia. |
+|--------|-----------|
+| `main_menu()` | Menampilkan menu utama. |
+| `start_translation()` | Mengatur input dan pemrosesan terjemahan. |
+| `translate_v1(text, target)` | API translator mode biasa. |
+| `translate_v2(text, target, mode)` | API translator mode slang/informal. |
+| `show_languages()` | Menampilkan daftar bahasa. |
+| `show_modes()` | Menampilkan mode V2. |
+| `log_history()` | Menyimpan riwayat ke file log. |
 | `show_history()` | Menampilkan riwayat dari file log. |
-| `log_history()` | Menyimpan riwayat ke file `h56_history.log`. |
-| `line(width)` | Membuat garis pemisah tabel ASCII. |
-| `row(text, width)` | Membuat baris isi tabel ASCII. |
-| `clear()` | Membersihkan layar terminal (Windows/Linux/Mac). |
+| `line()` & `row()` | Membuat elemen tabel ASCII. |
+| `clear()` | Membersihkan layar terminal. |
 
-------------------------------------------------------------------------
+---
 
 ## Instalasi
-
 ### 1. Pastikan Python Terinstal
-
-Program ini menggunakan **Python 3.7+**.
-
-Cek dengan:
-
 ```bash
 python --version
 ```
 
 ### 2. Install Dependensi
-
-Hanya membutuhkan modul eksternal berikut:
-
 ```bash
 pip install requests
 ```
 
 ### 3. (Opsional) Clone Repo
-
 ```bash
 git clone https://github.com/HASYIM56/translator-python-rest-api-cli.git
 cd translator-project
 ```
 
-------------------------------------------------------------------------
+---
 
 ## Menjalankan Program
-
-Jalankan program melalui terminal:
-
 ```bash
 python translator.py
 ```
 
-------------------------------------------------------------------------
+---
 
 ## Cara Menggunakan
+1. Jalankan program.
+2. Pilih menu utama.
+3. Masukkan teks.
+4. Pilih bahasa target.
+5. Pilih mode translasi (V1 atau V2).
+6. (Opsional) Masukkan ID negara.
+7. Hasil akan ditampilkan dalam tabel ASCII.
 
-### 1. Buka program
-
-Akan muncul menu utama seperti:
-
-```
-+--------------------------------------------------+
-| PROGRAM TERJEMAHAN MULTI-BAHASA                  |
-+--------------------------------------------------+
-| 1. Mulai Terjemahkan                             |
-| 2. Lihat Riwayat Terjemahan                      |
-| 3. Keluar Program                                |
-+--------------------------------------------------+
-```
-
-### 2. Pilih menu **1** untuk mulai menerjemahkan.
-
-### 3. Masukkan teks yang ingin diterjemahkan.
-
-Contoh:
-
-```
-Masukkan teks yang mau diterjemahkan : Hello, how are you?
-```
-
-### 4. Pilih bahasa target dari daftar seperti:
-
-```
-id = Indonesia
-en = English
-ja = Japanese
-...
-```
-
-### 5. (Opsional) Masukkan ID negara.
-
-### 6. Hasil terjemahan akan ditampilkan dalam tabel ASCII.
-
-------------------------------------------------------------------------
+---
 
 ## Dokumentasi API
 
-Program ini menggunakan API penerjemah publik:
+### Penambahan Dokumentasi API Mode V2
+API baru yang digunakan program berdasarkan kode Python terbaru:
 
--   **Endpoint**
-
+#### **Endpoint V2** Mode Slang / Informal
 ```
-POST https://h56-translator-api.vercel.app/api/translate
+POST https://h56-translator-api.vercel.app/api/translate/v2
 ```
-
--   **Payload**
-
+Payload:
 ```json
 {
   "text": "teks yang akan diterjemahkan",
-  "targetLang": "kode_bahasa"
+  "targetLang": "kode_bahasa",
+  "translationMode": "slang | informal | slang_v2 | informal_slang_v2"
 }
 ```
-
--   **Headers**
-
-```
-Content-Type: application/json
-```
-
--   **Timeout:** 10 detik
-
--   **Respons sukses:**
-
+Respons:
 ```json
 {
   "translatedText": "hasil terjemahan"
 }
 ```
 
-------------------------------------------------------------------------
+---
+
+## Dokumentasi API (Asli Dari File)
+### **V1 Endpoint Normal**
+```
+POST https://h56-translator-api.vercel.app/api/translate
+```
+Payload:
+```json
+{
+  "text": "teks contoh",
+  "targetLang": "id"
+}
+```
+Respons:
+```json
+{
+  "translatedText": "hasil"
+}
+```
+
+### **V2 Endpoint Slang/Informal**
+```
+POST https://h56-translator-api.vercel.app/api/translate/v2
+```
+Payload:
+```json
+{
+  "text": "teks contoh",
+  "targetLang": "id",
+  "translationMode": "slang"
+}
+```
+
+---
 
 ## Riwayat Terjemahan
-
-Semua riwayat disimpan pada file:
+Semua riwayat disimpan ke:
 ```
 h56_history.log
 ```
-
-Format log:
-
+Format:
 ```
-[2025-01-28 13:22:45] FROM: Hello | TO (id) = Halo | CountryID: MY
+[YYYY-MM-DD HH:MM:SS] MODE: v2 | FROM: Hello | TO (id) = Halo | CountryID: MY
 ```
 
-Pengguna dapat melihat riwayat melalui menu:
-```
-2. Lihat Riwayat Terjemahan
-```
-
-------------------------------------------------------------------------
+---
 
 ## Troubleshooting
-
 | Masalah | Penyebab | Solusi |
-|---|---|---|
-| API Timeout | Internet lambat / API down | Coba ulangi setelah beberapa detik |
-| Teks kosong | Input kurang valid | Masukkan teks minimal 1 karakter |
-| Kode bahasa salah | Salah ketik kode | Lihat tabel bahasa pada menu |
-| Terminal tidak bersih | Sistem tidak mendukung `cls/clear` | Jalankan manual `clear` atau `cls` |
+|---------|----------|--------|
+| Timeout API | Server sibuk / internet lambat | Coba ulangi beberapa saat |
+| Input kosong | Pengguna menekan Enter tanpa teks | Masukkan teks minimal 1 karakter |
+| Bahasa tidak valid | Kode tidak ada di daftar | Cek kembali daftar bahasa |
+| Mode V2 salah | Salah mengetik kode | Gunakan menu daftar mode |
 
-------------------------------------------------------------------------
+---
