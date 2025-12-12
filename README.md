@@ -16,6 +16,12 @@
 <!-- Status -->
 ![status](https://img.shields.io/badge/Status-Stable-brightgreen?style=for-the-badge&logoWidth=30)
 
+<p align="center">
+  <a href="https://github.com/HASYIM56/translator-python-rest-api-cli">
+    <img src="/assets/logo.png" alt="Logo Project" width="180" />
+  </a>
+</p>
+
 # Multi-Language Translation CLI Program (MLTCP)
 
 Program ini adalah aplikasi **Command Line Interface (CLI)** berbasis Python yang berfungsi untuk menerjemahkan teks ke berbagai bahasa menggunakan **H56 Translator API**. Aplikasi ini didesain dengan tampilan tabel ASCII yang rapi sehingga pengalaman penggunaan terasa lebih terstruktur dan mudah dibaca.
