@@ -1,15 +1,20 @@
-<table>
-  <tr>
-    <td><img src="https://img.shields.io/badge/MLTCP-Multi--Language%20Translation%20CLI%20Program-0A84FF?logo=python&logoColor=white" /></td>
-    <td><img src="https://img.shields.io/badge/version-1.0.4-blue" /></td>
-    <td><img src="https://img.shields.io/badge/python-3.10%2B-3776AB?logo=python&logoColor=white" /></td>
-  </tr>
-  <tr>
-    <td><img src="https://img.shields.io/badge/platform-CLI-lightgrey" /></td>
-    <td><img src="https://img.shields.io/badge/license-MIT-green" /></td>
-    <td><img src="https://img.shields.io/badge/status-stable-brightgreen" /></td>
-  </tr>
-</table>
+<!-- Project Title -->
+![project](https://img.shields.io/badge/MLTCP-Multi--Language%20Translation%20CLI%20Program-0A84FF?logo=python&logoColor=white&style=for-the-badge&logoWidth=30)
+
+<!-- Version -->
+![version](https://img.shields.io/badge/Version-1.0.4-blue?style=for-the-badge&logoWidth=30)
+
+<!-- Python Support -->
+![python](https://img.shields.io/badge/Python-3.10%2B-3776AB?logo=python&logoColor=white&style=for-the-badge&logoWidth=30)
+
+<!-- Platform -->
+![platform](https://img.shields.io/badge/Platform-CLI-lightgrey?style=for-the-badge&logoWidth=30)
+
+<!-- License -->
+![license](https://img.shields.io/badge/License-Apache--2.0-green?style=for-the-badge&logoWidth=30)
+
+<!-- Status -->
+![status](https://img.shields.io/badge/Status-Stable-brightgreen?style=for-the-badge&logoWidth=30)
 
 # Multi-Language Translation CLI Program (MLTCP)
 
