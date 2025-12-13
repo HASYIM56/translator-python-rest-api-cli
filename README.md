@@ -40,6 +40,7 @@ Program ini adalah aplikasi **Command Line Interface (CLI)** berbasis Python yan
 9. Dokumentasi API
 10. Riwayat Terjemahan
 11. Troubleshooting
+12. Struktur Folder Program
 
 ---
 
