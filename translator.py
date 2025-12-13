@@ -1,26 +1,28 @@
 import requests
-import json
 import os
-import datetime
 import shutil
+
+# IMPORT MODULE HISTORY
+import history
 
 # ====================================================
 # CONFIG & GLOBAL VARIABLES
 # ====================================================
 
-LOG_FILE = "h56_history.log"
-
 def get_terminal_width(default=60):
-    """Menentukan lebar tabel dinamis sesuai terminal"""
     try:
         width = shutil.get_terminal_size().columns
-        return min(max(width, 40), 100)  # Batas aman
+        return min(max(width, 40), 120)
     except:
         return default
 
+
 W = get_terminal_width()
 
-# Daftar bahasa yang didukung
+# ====================================================
+# SUPPORTED LANGUAGES (EXTENDED)
+# ====================================================
+
 LANGUAGES = {
     "id": "Indonesia",
     "en": "English",
@@ -31,17 +33,39 @@ LANGUAGES = {
     "de": "German",
     "es": "Spanish",
     "ru": "Russian",
-    "zh": "Chinese (Mandarin)"
+    "zh": "Chinese (Mandarin)",
+    "it": "Italian",
+    "pt": "Portuguese",
+    "tr": "Turkish",
+    "th": "Thai",
+    "vi": "Vietnamese",
+    "pl": "Polish",
+    "nl": "Dutch",
+    "sv": "Swedish",
+    "fi": "Finnish",
+    "cs": "Czech",
+    "hu": "Hungarian",
+    "jv": "Javanese",
+    "ms": "Malay",
+    "hi": "Hindi",
+    "bn": "Bengali",
+    "ur": "Urdu",
+    "el": "Greek",
+    "he": "Hebrew",
+    "ro": "Romanian",
+    "uk": "Ukrainian"
 }
 
-# Mode Translate V2
+# ====================================================
+# TRANSLATION MODES
+# ====================================================
+
 TRANSLATE_MODES = {
     "slang": "Casual Slang",
     "informal": "Informal",
     "slang_v2": "Slang V2",
     "informal_slang_v2": "Informal Slang V2"
 }
-
 
 # ====================================================
 # UTILITIES
@@ -50,45 +74,20 @@ TRANSLATE_MODES = {
 def line(width=W):
     return "+" + "-" * (width - 2) + "+"
 
+
 def row(text, width=W):
     text = str(text)
     if len(text) > width - 4:
         text = text[:width - 7] + "..."
     return "| " + text.ljust(width - 4) + " |"
 
+
 def clear():
     os.system("cls" if os.name == "nt" else "clear")
 
+
 def pause(msg="\nTekan Enter untuk kembali ke menu..."):
     input(msg)
-
-def log_history(original, translated, lang, country_id, mode):
-    """Menyimpan riwayat ke file log"""
-    with open(LOG_FILE, "a", encoding="utf-8") as f:
-        timestamp = datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S")
-        f.write(
-            f"[{timestamp}] MODE: {mode} | FROM: {original} | "
-            f"TO ({lang}) = {translated} | CountryID: {country_id}\n"
-        )
-
-def show_history():
-    clear()
-    print(line())
-    print(row("RIWAYAT TERJEMAHAN"))
-    print(line())
-
-    if not os.path.exists(LOG_FILE):
-        print("Belum ada riwayat tersimpan.\n")
-    else:
-        with open(LOG_FILE, "r", encoding="utf-8") as f:
-            logs = f.readlines()
-            if len(logs) == 0:
-                print("Belum ada riwayat.\n")
-            else:
-                for log in logs:
-                    print(log.strip())
-
-    pause()
 
 
 # ====================================================
@@ -96,19 +95,18 @@ def show_history():
 # ====================================================
 
 def translate_v1(text, target):
-    """Translator Mode V1"""
     url = "https://h56-translator-api.vercel.app/api/translate"
     payload = {"text": text, "targetLang": target}
 
     try:
-        resp = requests.post(url, json=payload, timeout=10)
+        resp = requests.post(url, json=payload, timeout=15)
         data = resp.json()
         return data.get("translatedText", "(Gagal menerjemahkan!)")
     except:
         return "(Error koneksi ke server)"
 
+
 def translate_v2(text, target, mode):
-    """Translator Mode V2 + Slang/Informal"""
     url = "https://h56-translator-api.vercel.app/api/translate/v2"
     payload = {
         "text": text,
@@ -117,7 +115,7 @@ def translate_v2(text, target, mode):
     }
 
     try:
-        resp = requests.post(url, json=payload, timeout=10)
+        resp = requests.post(url, json=payload, timeout=15)
         data = resp.json()
         return data.get("translatedText", "(Gagal menerjemahkan!)")
     except:
@@ -125,7 +123,7 @@ def translate_v2(text, target, mode):
 
 
 # ====================================================
-# MAIN FEATURES
+# DISPLAY HELPERS
 # ====================================================
 
 def show_languages():
@@ -135,6 +133,7 @@ def show_languages():
     for code, name in LANGUAGES.items():
         print(row(f"{code} = {name}"))
     print(line())
+
 
 def show_modes():
     print("\n" + line())
@@ -146,7 +145,7 @@ def show_modes():
 
 
 # ====================================================
-# PROGRAM INTERFACE
+# MAIN FEATURES
 # ====================================================
 
 def start_translation():
@@ -161,18 +160,15 @@ def start_translation():
         pause()
         return
 
-    # Pilih bahasa target
     while True:
         show_languages()
-        target_lang = input("Masukkan bahasa target (atau ketik 'back' untuk kembali): ").strip().lower()
+        target_lang = input("Masukkan bahasa target (atau ketik 'back'): ").strip().lower()
         if target_lang == "back":
             return
         if target_lang in LANGUAGES:
             break
-        else:
-            print("\nKode bahasa salah!")
+        print("\nKode bahasa salah!")
 
-    # Pilih mode translate
     print("\nPILIH MODE TRANSLASI:")
     print("1. Mode Normal (V1)")
     print("2. Mode Slang/Informal (V2)")
@@ -189,32 +185,36 @@ def start_translation():
             selected_mode = input("Masukkan mode V2: ").strip().lower()
             if selected_mode in TRANSLATE_MODES:
                 break
-            else:
-                print("Kode mode salah!")
+            print("Kode mode salah!")
 
     country_id = input("Masukkan ID negara (opsional): ").strip()
 
-    # Proses API
-    print("\nMemproses terjemahan, harap tunggu...\n")
-    if mode_used == "v1":
-        translated_text = translate_v1(input_text, target_lang)
-    else:
-        translated_text = translate_v2(input_text, target_lang, selected_mode)
+    print("\nMemproses terjemahan...\n")
 
-    # Simpan log
-    log_history(input_text, translated_text, target_lang, country_id, mode_used)
+    translated_text = (
+        translate_v1(input_text, target_lang)
+        if mode_used == "v1"
+        else translate_v2(input_text, target_lang, selected_mode)
+    )
 
-    # Output
+    history.write_history(
+        input_text,
+        translated_text,
+        target_lang,
+        country_id,
+        mode_used if mode_used == "v1" else selected_mode
+    )
+
     clear()
     print(line())
     print(row("HASIL TERJEMAHAN"))
     print(line())
-    print(row(f"Teks Asli      : {input_text}"))
-    print(row(f"Bahasa Target  : {target_lang} ({LANGUAGES[target_lang]})"))
-    print(row(f"Mode           : {mode_used.upper()}"))
-    if mode_used == "v2":
-        print(row(f"V2 Mode        : {selected_mode}"))
-    print(row(f"ID Negara      : {country_id if country_id else '-'}"))
+    print(row(f"Teks Asli     : {input_text}"))
+    print(row(f"Bahasa Target : {target_lang} ({LANGUAGES[target_lang]})"))
+    print(row(f"Mode          : {mode_used.upper()}"))
+    if selected_mode:
+        print(row(f"V2 Mode       : {selected_mode}"))
+    print(row(f"ID Negara     : {country_id or '-'}"))
     print(line())
     print(row("OUTPUT:"))
     print(line())
@@ -222,6 +222,10 @@ def start_translation():
     print(line())
 
     pause()
+
+
+def show_history():
+    history.display_history(clear_func=clear, pause_func=pause)
 
 
 # ====================================================
