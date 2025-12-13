@@ -6,6 +6,17 @@ import shutil
 import history
 
 # ====================================================
+# COLOR SYSTEM (BRIGHT GREEN)
+# ====================================================
+
+class Color:
+    GREEN = "\033[92m"
+    RESET = "\033[0m"
+
+def green(text):
+    return f"{Color.GREEN}{text}{Color.RESET}"
+
+# ====================================================
 # CONFIG & GLOBAL VARIABLES
 # ====================================================
 
@@ -15,7 +26,6 @@ def get_terminal_width(default=60):
         return min(max(width, 40), 120)
     except:
         return default
-
 
 W = get_terminal_width()
 
@@ -72,23 +82,20 @@ TRANSLATE_MODES = {
 # ====================================================
 
 def line(width=W):
-    return "+" + "-" * (width - 2) + "+"
-
+    return green("+" + "-" * (width - 2) + "+")
 
 def row(text, width=W):
     text = str(text)
     if len(text) > width - 4:
         text = text[:width - 7] + "..."
-    return "| " + text.ljust(width - 4) + " |"
-
+    content = "| " + text.ljust(width - 4) + " |"
+    return green(content)
 
 def clear():
     os.system("cls" if os.name == "nt" else "clear")
 
-
 def pause(msg="\nTekan Enter untuk kembali ke menu..."):
-    input(msg)
-
+    input(green(msg))
 
 # ====================================================
 # API FUNCTION
@@ -97,14 +104,12 @@ def pause(msg="\nTekan Enter untuk kembali ke menu..."):
 def translate_v1(text, target):
     url = "https://h56-translator-api.vercel.app/api/translate"
     payload = {"text": text, "targetLang": target}
-
     try:
         resp = requests.post(url, json=payload, timeout=15)
         data = resp.json()
         return data.get("translatedText", "(Gagal menerjemahkan!)")
     except:
         return "(Error koneksi ke server)"
-
 
 def translate_v2(text, target, mode):
     url = "https://h56-translator-api.vercel.app/api/translate/v2"
@@ -113,14 +118,12 @@ def translate_v2(text, target, mode):
         "targetLang": target,
         "translationMode": mode
     }
-
     try:
         resp = requests.post(url, json=payload, timeout=15)
         data = resp.json()
         return data.get("translatedText", "(Gagal menerjemahkan!)")
     except:
         return "(Error koneksi ke server)"
-
 
 # ====================================================
 # DISPLAY HELPERS
@@ -134,7 +137,6 @@ def show_languages():
         print(row(f"{code} = {name}"))
     print(line())
 
-
 def show_modes():
     print("\n" + line())
     print(row("MODE TRANSLATE V2"))
@@ -142,7 +144,6 @@ def show_modes():
     for code, name in TRANSLATE_MODES.items():
         print(row(f"{code} = {name}"))
     print(line())
-
 
 # ====================================================
 # MAIN FEATURES
@@ -154,26 +155,26 @@ def start_translation():
     print(row("TABEL INPUT TERJEMAHAN"))
     print(line())
 
-    input_text = input("Masukkan teks yang mau diterjemahkan : ").strip()
+    input_text = input(green("Masukkan teks yang mau diterjemahkan : ")).strip()
     if not input_text:
-        print("\nTeks tidak boleh kosong.")
+        print(green("\nTeks tidak boleh kosong."))
         pause()
         return
 
     while True:
         show_languages()
-        target_lang = input("Masukkan bahasa target (atau ketik 'back'): ").strip().lower()
+        target_lang = input(green("Masukkan bahasa target (atau ketik 'back'): ")).strip().lower()
         if target_lang == "back":
             return
         if target_lang in LANGUAGES:
             break
-        print("\nKode bahasa salah!")
+        print(green("\nKode bahasa salah!"))
 
-    print("\nPILIH MODE TRANSLASI:")
-    print("1. Mode Normal (V1)")
-    print("2. Mode Slang/Informal (V2)")
+    print(green("\nPILIH MODE TRANSLASI:"))
+    print(green("1. Mode Normal (V1)"))
+    print(green("2. Mode Slang/Informal (V2)"))
 
-    mode_select = input("Pilih mode (1/2): ").strip()
+    mode_select = input(green("Pilih mode (1/2): ")).strip()
 
     mode_used = "v1"
     selected_mode = None
@@ -182,14 +183,14 @@ def start_translation():
         mode_used = "v2"
         while True:
             show_modes()
-            selected_mode = input("Masukkan mode V2: ").strip().lower()
+            selected_mode = input(green("Masukkan mode V2: ")).strip().lower()
             if selected_mode in TRANSLATE_MODES:
                 break
-            print("Kode mode salah!")
+            print(green("Kode mode salah!"))
 
-    country_id = input("Masukkan ID negara (opsional): ").strip()
+    country_id = input(green("Masukkan ID negara (opsional): ")).strip()
 
-    print("\nMemproses terjemahan...\n")
+    print(green("\nMemproses terjemahan...\n"))
 
     translated_text = (
         translate_v1(input_text, target_lang)
@@ -223,10 +224,8 @@ def start_translation():
 
     pause()
 
-
 def show_history():
     history.display_history(clear_func=clear, pause_func=pause)
-
 
 # ====================================================
 # MAIN MENU
@@ -243,19 +242,18 @@ def main_menu():
         print(row("3. Keluar Program"))
         print(line())
 
-        choice = input("\nPilih menu (1/2/3): ").strip()
+        choice = input(green("\nPilih menu (1/2/3): ")).strip()
 
         if choice == "1":
             start_translation()
         elif choice == "2":
             show_history()
         elif choice == "3":
-            print("\nKeluar program...")
+            print(green("\nKeluar program..."))
             break
         else:
-            print("\nInput tidak valid!")
+            print(green("\nInput tidak valid!"))
             pause()
-
 
 # ====================================================
 # RUN PROGRAM
