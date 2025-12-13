@@ -275,3 +275,28 @@ Format:
 | Input kosong | Pengguna menekan Enter tanpa teks | Masukkan teks minimal 1 karakter |
 | Bahasa tidak valid | Kode tidak ada di daftar | Cek kembali daftar bahasa |
 | Mode V2 salah | Salah mengetik kode | Gunakan menu daftar mo
+
+
+---
+
+## Struktur Folder Program
+
+Struktur direktori proyek berdasarkan implementasi kode saat ini adalah sebagai berikut:
+
+```
+project/
+ translator.py
+ history.py
+ history_translate/
+    h56_history.log
+```
+
+**Penjelasan singkat:**
+- `translator.py`  
+  File utama aplikasi CLI, berisi menu, logika translasi, pemilihan bahasa, mode V1/V2, serta integrasi API.
+- `history.py`  
+  Modul pendukung untuk mencatat, membaca, dan menampilkan riwayat terjemahan secara terstruktur.
+- `history_translate/`  
+  Folder penyimpanan histori terjemahan.
+- `h56_history.log`  
+  File log yang menyimpan semua riwayat translasi lengkap dengan timestamp, mode, bahasa target, dan ID negara.
