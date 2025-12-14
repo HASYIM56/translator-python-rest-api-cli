@@ -150,6 +150,108 @@ Format request V2 menggunakan field tambahan `translationMode`.
 
 ---
 
+## Fitur Baru: Hapus Riwayat Terjemahan (`del`)
+
+Program kini mendukung **perintah khusus untuk menghapus seluruh history terjemahan** langsung dari menu riwayat.
+
+### Lokasi Fitur
+Fitur ini tersedia pada menu:
+```
+2. Lihat Riwayat Terjemahan
+```
+
+Saat berada di tampilan riwayat, pengguna dapat menjalankan perintah tambahan.
+
+### Perintah yang Tersedia
+| Perintah | Fungsi |
+|--------|--------|
+| `del` | Menghapus seluruh riwayat terjemahan |
+| `Enter` | Kembali ke menu utama |
+
+### Cara Menggunakan Fitur `del`
+1. Buka menu **Lihat Riwayat Terjemahan**.
+2. Ketik perintah berikut:
+   ```
+   del
+   ```
+3. Program akan menampilkan konfirmasi:
+   ```
+   Yakin hapus SEMUA history? (y/n):
+   ```
+4. Ketik `y` untuk melanjutkan penghapusan.
+
+Jika berhasil, program akan menampilkan pesan:
+```
+History berhasil dihapus.
+```
+
+### Catatan Penting
+- Penghapusan **bersifat permanen**.
+- Seluruh isi file `h56_history.log` akan dikosongkan.
+- Folder `history_translate/` **tidak dihapus**.
+- Jika file log belum ada, sistem akan membuatnya otomatis.
+
+---
+
+## Dokumentasi Teknis Fitur `del`
+
+### Fungsi Terkait (`history.py`)
+
+#### `display_history()`
+Fungsi ini menangani:
+- Menampilkan daftar history
+- Menerima perintah user
+- Memproses perintah `del`
+
+Potongan logika utama:
+- Membaca input command user
+- Jika input == `del`, program meminta konfirmasi
+- Jika konfirmasi == `y`, maka fungsi `clear_history()` dipanggil
+
+#### `clear_history()`
+```python
+open(LOG_FILE, "w", encoding="utf-8").close()
+```
+Fungsi ini:
+- Membuka file history dalam mode tulis (`w`)
+- Mengosongkan seluruh isi file tanpa menghapus file
+
+---
+
+## Struktur Program (Update)
+
+### Struktur Modul Terkait History
+```
+history.py
+â”œâ”€â”€ ensure_history_dir()
+â”œâ”€â”€ write_history()
+â”œâ”€â”€ read_history()
+â”œâ”€â”€ clear_history()   # â† fitur baru
+â””â”€â”€ display_history() # menangani command `del`
+```
+
+### Integrasi dengan `translator.py`
+```python
+import history
+```
+
+Fungsi pemanggil:
+- `show_history()` memanggil `history.display_history()`
+- `start_translation()` menyimpan history melalui `write_history()`
+
+---
+
+## Alur Kerja Fitur History
+1. User melakukan translasi
+2. Data disimpan melalui `write_history()`
+3. User membuka menu history
+4. User dapat:
+   - Melihat daftar history
+   - Menghapus seluruh history dengan `del`
+5. File `h56_history.log` diperbarui sesuai aksi
+
+---
+
 ## Struktur Program
 Berikut fungsi-fungsi utama dalam kode:
 | Fungsi | Deskripsi |
