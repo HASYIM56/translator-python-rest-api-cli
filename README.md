@@ -223,11 +223,11 @@ Fungsi ini:
 ### Struktur Modul Terkait History
 ```
 history.py
-â”œâ”€â”€ ensure_history_dir()
-â”œâ”€â”€ write_history()
-â”œâ”€â”€ read_history()
-â”œâ”€â”€ clear_history()   # â† fitur baru
-â””â”€â”€ display_history() # menangani command `del`
+ensure_history_dir()
+write_history()
+read_history()
+clear_history()   # â† fitur baru
+display_history() # menangani command `del`
 ```
 
 ### Integrasi dengan `translator.py`
