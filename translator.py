@@ -88,8 +88,7 @@ def row(text, width=W):
     text = str(text)
     if len(text) > width - 4:
         text = text[:width - 7] + "..."
-    content = "| " + text.ljust(width - 4) + " |"
-    return green(content)
+    return green("| " + text.ljust(width - 4) + " |")
 
 def clear():
     os.system("cls" if os.name == "nt" else "clear")
@@ -106,8 +105,7 @@ def translate_v1(text, target):
     payload = {"text": text, "targetLang": target}
     try:
         resp = requests.post(url, json=payload, timeout=15)
-        data = resp.json()
-        return data.get("translatedText", "(Gagal menerjemahkan!)")
+        return resp.json().get("translatedText", "(Gagal menerjemahkan!)")
     except:
         return "(Error koneksi ke server)"
 
@@ -120,8 +118,7 @@ def translate_v2(text, target, mode):
     }
     try:
         resp = requests.post(url, json=payload, timeout=15)
-        data = resp.json()
-        return data.get("translatedText", "(Gagal menerjemahkan!)")
+        return resp.json().get("translatedText", "(Gagal menerjemahkan!)")
     except:
         return "(Error koneksi ke server)"
 
@@ -144,6 +141,23 @@ def show_modes():
     for code, name in TRANSLATE_MODES.items():
         print(row(f"{code} = {name}"))
     print(line())
+
+# ====================================================
+# DEVELOPER INFO
+# ====================================================
+
+def show_developer_info():
+    clear()
+    print(line())
+    print(row("INFORMASI DEVELOPER"))
+    print(line())
+    print(row("Program ini dibuat oleh HASYIM56"))
+    print(row(""))
+    print(row("Youtube  : https://youtube.com/@HASYIM56"))
+    print(row("Instagram: https://instagram.com/hasyim56_modder"))
+    print(row("Github   : https://github.com/HASYIM56"))
+    print(line())
+    pause()
 
 # ====================================================
 # MAIN FEATURES
@@ -239,16 +253,19 @@ def main_menu():
         print(line())
         print(row("1. Mulai Terjemahkan"))
         print(row("2. Lihat Riwayat Terjemahan"))
-        print(row("3. Keluar Program"))
+        print(row("3. Informasi Developer"))
+        print(row("4. Keluar Program"))
         print(line())
 
-        choice = input(green("\nPilih menu (1/2/3): ")).strip()
+        choice = input(green("\nPilih menu (1/2/3/4): ")).strip()
 
         if choice == "1":
             start_translation()
         elif choice == "2":
             show_history()
         elif choice == "3":
+            show_developer_info()
+        elif choice == "4":
             print(green("\nKeluar program..."))
             break
         else:
