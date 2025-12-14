@@ -226,7 +226,7 @@ history.py
 ensure_history_dir()
 write_history()
 read_history()
-clear_history()   # â† fitur baru
+clear_history()   # fitur baru
 display_history() # menangani command `del`
 ```
 
