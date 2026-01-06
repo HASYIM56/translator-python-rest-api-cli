@@ -283,7 +283,7 @@ pip install requests
 ### 3. (Opsional) Clone Repo
 ```bash
 git clone https://github.com/HASYIM56/translator-python-rest-api-cli.git
-cd translator-project
+cd translator-python-rest-api-cli
 ```
 
 ---
