@@ -17,6 +17,24 @@ def green(text):
     return f"{Color.GREEN}{text}{Color.RESET}"
 
 # ====================================================
+# ASCII ART HEADER
+# ====================================================
+
+ASCII_HEADER = r"""
+ /$$      /$$ /$$    /$$$$$$$$ /$$$$$$  /$$$$$$$
+| $$$    /$$$| $$   |__  $$__//$$__  $$| $$__  $$
+| $$$$  /$$$$| $$      | $$  | $$  \__/| $$  \ $$
+| $$ $$/$$ $$| $$      | $$  | $$      | $$$$$$$/
+| $$  $$$| $$| $$      | $$  | $$      | $$____/
+| $$\  $ | $$| $$      | $$  | $$    $$| $$
+| $$ \/  | $$| $$$$$$$$| $$  |  $$$$$$/| $$
+|__/     |__/|________/|__/   \______/ |__/
+"""
+
+def show_header():
+    print(green(ASCII_HEADER))
+
+# ====================================================
 # CONFIG & GLOBAL VARIABLES
 # ====================================================
 
@@ -148,6 +166,7 @@ def show_modes():
 
 def show_developer_info():
     clear()
+    show_header()
     print(line())
     print(row("INFORMASI DEVELOPER"))
     print(line())
@@ -165,6 +184,7 @@ def show_developer_info():
 
 def start_translation():
     clear()
+    show_header()
     print(line())
     print(row("TABEL INPUT TERJEMAHAN"))
     print(line())
@@ -221,6 +241,7 @@ def start_translation():
     )
 
     clear()
+    show_header()
     print(line())
     print(row("HASIL TERJEMAHAN"))
     print(line())
@@ -248,6 +269,7 @@ def show_history():
 def main_menu():
     while True:
         clear()
+        show_header()
         print(line())
         print(row("PROGRAM TERJEMAHAN MULTI-BAHASA"))
         print(line())
@@ -277,4 +299,6 @@ def main_menu():
 # ====================================================
 
 if __name__ == "__main__":
+    clear()
+    show_header()
     main_menu()
